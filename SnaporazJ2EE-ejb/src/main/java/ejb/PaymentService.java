@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.WebService;
 import javax.ejb.Stateless;
@@ -25,5 +26,15 @@ public class PaymentService {
     @WebMethod(operationName = "addPayment")
     public String addPayment(@WebParam(name = "id") String id, @WebParam(name = "userId") String userId, @WebParam(name = "project") long project, @WebParam(name = "amount") double amount) {
         return ejbRef.addPayment(id, userId, project, amount);
+    }
+
+    @WebMethod(operationName = "getPayments")
+    public List<Payment> getPayments() {
+        return ejbRef.getPayments();
+    }
+    
+    @WebMethod(operationName = "clearPayments")
+    public void clearPayments() {
+        ejbRef.clearPayments();
     }
 }

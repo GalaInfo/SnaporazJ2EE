@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +15,9 @@ import javax.ejb.Local;
 @Local
 public interface PaymentManagerLocal {
 
-    String addPayment(String id, String userId, long project, double amount);    
+    String addPayment(String id, String userId, long project, double amount);
+    
+    List<Payment> getPayments();
+    
+    void clearPayments();
 }
