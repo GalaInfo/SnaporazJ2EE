@@ -54,7 +54,7 @@ public class PaymentManager implements PaymentManagerLocal {
         if (response.getBoolean("success", false)) {
             Payment p = new Payment();
             p.setId(id);
-            p.setUserId(userId);
+            p.setUserId(response.getString("userId", ""));
             p.setProject(project);
             p.setAmount(amount);
             paymentFacade.create(p);
