@@ -35,33 +35,18 @@ public class PaymentManager implements PaymentManagerLocal {
         //controlla che l'id della transazione non sia già presente nel DB
         for (Payment p : paymentFacade.findAll()) {
             if (p.getId().equals(id)) {
-                return "Errore: Donazione già effettuata";
+                return "Donazione già effettuata";
             }
         }
 
-        //chiamata al servizio REST di SnaporazSpring per controllo di errori e aggiornamento del progetto
-        Client client = ClientBuilder.newClient();
-        final String url = "http://localhost:8080/SnaporazSpring/donate";
-        WebTarget target = client.target(url);
-        Form form = new Form();
-        form.param("transactionId", id);
-        form.param("project", "" + project);
-        form.param("sum", "" + amount);
-        form.param("idTokenString", userId);
-        JsonObject response = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), JsonObject.class);
-
-        //creazione della transazione e inserimento nel DB in caso di successo, segnalazione dell'errore altrimenti
-        if (response.getBoolean("success", false)) {
-            Payment p = new Payment();
-            p.setId(id);
-            p.setUserId(response.getString("userId", ""));
-            p.setProject(project);
-            p.setAmount(amount);
-            paymentFacade.create(p);
-            return "Transazione avvenuta con successo";
-        } else {
-            return response.getString("response", "Donazione fallita");
-        }
+        //creazione della transazione e inserimento nel DB
+        Payment p = new Payment();
+        p.setId(id);
+        p.setUserId(userId);
+        p.setProject(project);
+        p.setAmount(amount);
+        paymentFacade.create(p);
+        return "Donazione avvenuta con successo";
     }
 
     @Override
