@@ -27,10 +27,17 @@ public class PaymentManager implements PaymentManagerLocal {
     @EJB
     private PaymentFacadeLocal paymentFacade;
 
+    private final String key = "SnaporazKey";
+
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public String addPayment(String id, String userId, long project, double amount) {
+    public String addPayment(String key, String id, String userId, long project, double amount) {
+
+        //controlla che l'id della transazione non sia già presente nel DB
+        if (!this.key.equals(key)) {
+            return "Chiave errata";
+        }
 
         //controlla che l'id della transazione non sia già presente nel DB
         for (Payment p : paymentFacade.findAll()) {

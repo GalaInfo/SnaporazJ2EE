@@ -24,8 +24,8 @@ public class PaymentService {
     // "Web Service > Add Operation"
 
     @WebMethod(operationName = "addPayment")
-    public String addPayment(@WebParam(name = "id") String id, @WebParam(name = "userId") String userId, @WebParam(name = "project") long project, @WebParam(name = "amount") double amount) {
-        return ejbRef.addPayment(id, userId, project, amount);
+    public String addPayment(@WebParam(name = "key") String key, @WebParam(name = "id") String id, @WebParam(name = "userId") String userId, @WebParam(name = "project") long project, @WebParam(name = "amount") double amount) {
+        return ejbRef.addPayment(key, id, userId, project, amount);
     }
 
     @WebMethod(operationName = "getPayments")

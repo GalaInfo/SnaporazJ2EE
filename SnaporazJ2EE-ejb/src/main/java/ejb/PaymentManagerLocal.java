@@ -15,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface PaymentManagerLocal {
 
-    String addPayment(String id, String userId, long project, double amount);
+    String addPayment(String key, String id, String userId, long project, double amount);
     
     List<Payment> getPayments();
     
